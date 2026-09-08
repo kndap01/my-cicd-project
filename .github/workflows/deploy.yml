@@ -44,3 +44,14 @@ jobs:
       - name: Test AWS connection
         run: |
           aws sts get-caller-identity
+
+      - name: Create deployment package
+        run: |
+          zip -r deployment.zip index.html appspec.yml scripts/
+
+      - name: Upload deployment package to S3
+        run: |
+          aws s3 cp deployment.zip \
+            s3://task-4-staticwebsite-container1/deployments/${{ github.sha }}.zip
+
+          echo "Deployment package uploaded successfully!"
