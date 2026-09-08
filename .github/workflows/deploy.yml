@@ -1,0 +1,32 @@
+name: CI-CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check application files
+        run: |
+          echo "Checking application files..."
+
+          test -f index.html
+          test -f appspec.yml
+          test -f scripts/stop_server.sh
+          test -f scripts/install_dependencies.sh
+          test -f scripts/start_server.sh
+
+          echo "All required files found!"
+
+      - name: Validate AppSpec
+        run: |
+          grep -q "version: 0.0" appspec.yml
+          grep -q "os: linux" appspec.yml
+          echo "AppSpec validation passed!"
