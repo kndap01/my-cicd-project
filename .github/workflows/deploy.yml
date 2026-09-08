@@ -45,13 +45,13 @@ jobs:
         run: |
           aws sts get-caller-identity
 
-      - name: Create deployment package
+      - name: Create development package
         run: |
-          zip -r deployment.zip index.html appspec.yml scripts/
+          zip -r development.zip index.html appspec.yml scripts/
 
-      - name: Upload deployment package to S3
+      - name: Upload development package to S3
         run: |
-          aws s3 cp deployment.zip \
-            s3://task-4-staticwebsite-container1/deployments/${{ github.sha }}.zip
+          aws s3 cp development.zip \
+            s3://task-4-staticwebsite-container1/development/${{ github.sha }}.zip
 
-          echo "Deployment package uploaded successfully!"
+          echo "development package uploaded successfully!"
